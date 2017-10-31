@@ -234,7 +234,10 @@
     "redux-saga": "0.14.0",
     "reselect": "2.5.4",
     "sanitize.css": "4.1.0",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.75.1",
     "styled-components": "1.1.2",
+    "sweetalert": "^2.0.8",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.1"
   },
