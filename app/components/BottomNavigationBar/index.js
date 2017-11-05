@@ -15,25 +15,6 @@ import WatchIconActive from 'assets/watch_icon_active.svg';
 import PinIconActive from 'assets/pin_icon_active.svg';
 import InfoIconActive from 'assets/info_icon_active.svg';
 
-const navigationItems = [
-  {
-    icon: PersonIcon,
-    iconActive: PersonIconActive,
-  },
-  {
-    icon: PinIcon,
-    iconActive: PinIconActive,
-  },
-  {
-    icon: WatchIcon,
-    iconActive: WatchIconActive,
-  },
-  {
-    icon: InfoIcon,
-    iconActive: InfoIconActive
-  }
-]
-
 const NavigationWrapper = styled.div`
   background-color: #ffffff;
   border-top: 1px solid lightgrey;
@@ -57,13 +38,13 @@ const NavigationItem = styled.div`
 `;
 
 
-const BottomNavigationBar = () => {
+const BottomNavigationBar = ({ navigationItems }) => {
   return (
     <NavigationWrapper>
       {navigationItems.map(navItem =>
         <NavigationItem>
-          <button>
-            <img src={navItem.icon} role="presentation" />
+          <button onClick={navItem.onClick}>
+            <img src={navItem.isActive ? navItem.iconActive : navItem.icon} role="presentation" />
           </button>
         </NavigationItem>)
       }

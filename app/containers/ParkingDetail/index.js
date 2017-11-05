@@ -16,6 +16,15 @@ import ParkingLotMap from 'assets/parking_lot.png';
 import MarkerIcon from 'assets/pin_icon.svg';
 import WatchIcon from 'assets/watch_icon.svg';
 
+import { push, goBack } from 'react-router-redux';
+import PersonIcon from 'assets/person_icon.svg';
+import PinIcon from 'assets/pin_icon.svg';
+import InfoIcon from 'assets/info_icon.svg';
+import PersonIconActive from 'assets/person_icon_active.svg';
+import WatchIconActive from 'assets/watch_icon_active.svg';
+import PinIconActive from 'assets/pin_icon_active.svg';
+import InfoIconActive from 'assets/info_icon_active.svg';
+
 const AppContainer = styled.div`
   margin-top: 3rem;
   display: flex;
@@ -59,9 +68,34 @@ const Border = styled.div`
 
 export class ParkingDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+
+    const { dispatch } = this.props;
+    const navigationItems = [
+      {
+        icon: PersonIcon,
+        iconActive: PersonIconActive,
+        onClick:  () => { dispatch(push('/profile')) }
+      },
+      {
+        icon: PinIcon,
+        iconActive: PinIconActive,
+        onClick:  () => { dispatch(push('/building-map')) },
+      },
+      {
+        icon: WatchIcon,
+        iconActive: WatchIconActive,
+        onClick: () => { dispatch(push('/parking-history')) }
+      },
+      {
+        icon: InfoIcon,
+        iconActive: InfoIconActive,
+        onClick: () => {  dispatch(push('/parking-detail')) },
+        isActive: true,
+      }
+    ]
     return (
       <div>
-        <TitleBar help={true} back={true} title="Parking Detail" />
+        <TitleBar help={true} back={true} title="Parking Detail" onBackIconClick={() => { dispatch(goBack())} }/>
         <AppContainer>
           <ContentWrapper>
             <h3>Your Parkng Detail</h3>
@@ -82,7 +116,7 @@ export class ParkingDetail extends React.Component { // eslint-disable-line reac
             <Button primary>Pay Now</Button>
           </ContentWrapper>
         </AppContainer>
-        <BottomNavigationBar />
+        <BottomNavigationBar navigationItems={navigationItems} />
       </div>
     );
   }

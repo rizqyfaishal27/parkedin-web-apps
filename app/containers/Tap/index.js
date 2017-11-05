@@ -14,6 +14,18 @@ import BottomNavigationBar from 'components/BottomNavigationBar';
 import { Button } from 'semantic-ui-react';
 import QRCode from 'assets/qr.png';
 
+import PersonIcon from 'assets/person_icon.svg';
+import WatchIcon from 'assets/watch_icon.svg';
+import PinIcon from 'assets/pin_icon.svg';
+import InfoIcon from 'assets/info_icon.svg';
+import PersonIconActive from 'assets/person_icon_active.svg';
+import WatchIconActive from 'assets/watch_icon_active.svg';
+import PinIconActive from 'assets/pin_icon_active.svg';
+import InfoIconActive from 'assets/info_icon_active.svg';
+
+import { push, goBack } from 'react-router-redux';
+
+
 const AppContainer = styled.div`
   margin-top: 1rem;
   display: flex;
@@ -47,9 +59,34 @@ const QRCodeWrapper = styled.div`
 
 export class Tap extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { dispatch } = this.props;
+
+    const navigationItems = [
+      {
+        icon: PersonIcon,
+        iconActive: PersonIconActive,
+        onClick:  () => { dispatch(push('/profile')) }
+      },
+      {
+        icon: PinIcon,
+        iconActive: PinIconActive,
+        onClick:  () => { dispatch(push('/building-map')) },
+        isActive: true,
+      },
+      {
+        icon: WatchIcon,
+        iconActive: WatchIconActive,
+        onClick: () => { dispatch(push('/parking-history')) }
+      },
+      {
+        icon: InfoIcon,
+        iconActive: InfoIconActive,
+        onClick: () => {  dispatch(push('/parking-detail')) }
+      }
+    ]
     return (
       <div>
-        <TitleBar back={true} help={true} title="EDC Tap" />
+        <TitleBar back={true} help={true} title="EDC Tap" onBackIconClick={() => { dispatch(goBack())} } />
         <AppContainer>
           <QRCodeWrapper>
             <div>
@@ -60,9 +97,9 @@ export class Tap extends React.Component { // eslint-disable-line react/prefer-s
             <p>Tap your handphone to EDC Machine in the entrace</p>
             <p>------- or -------</p>            
           </div>
-          <Button primary>Enter PIN</Button>
+          <Button primary onClick={() => { dispatch(push('/pin-code'))} }>Enter PIN</Button>
         </AppContainer>
-        <BottomNavigationBar />
+        <BottomNavigationBar navigationItems={navigationItems}/>
       </div>
     );
   }

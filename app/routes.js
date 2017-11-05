@@ -198,6 +198,46 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/parking-history',
+      name: 'parkingHistory',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/ParkingHistory/reducer'),
+          import('containers/ParkingHistory/sagas'),
+          import('containers/ParkingHistory'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, saga, component]) => {
+          injectReducer('parkingHistory', reducer.default);
+          injectSagas(saga.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/redeem-points',
+      name: 'redeemPoints',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/RedeemPoints/reducer'),
+          import('containers/RedeemPoints/sagas'),
+          import('containers/RedeemPoints'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, saga, component]) => {
+          injectReducer('redeemPoints', reducer.default);
+          injectSagas(saga.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

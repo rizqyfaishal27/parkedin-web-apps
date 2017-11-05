@@ -10,6 +10,7 @@ import BackIcon from 'assets/back_icon.svg';
 import HelpIcon from 'assets/help_icon.svg';
 
 const TitleBarWrapper = styled.div`
+  z-index: 99;
   background-color: #0e5184;
   width: 100%;
   padding: 0.5rem;

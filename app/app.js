@@ -15,6 +15,8 @@ import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { useScroll } from 'react-router-scroll';
+import MarkerIcon from 'assets/pin_icon.svg';
+import AppIcon from 'favicon.png';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
@@ -108,24 +110,29 @@ if (!window.Intl) {
   render(translationMessages);
 }
 
-navigator.serviceWorker.register('sw.js');
+navigator.serviceWorker.register('./sw.js');
 
 function showNotification() {
   Notification.requestPermission(function(result) {
     if (result === 'granted') {
+      const body = {
+        'body': 'ABC Plaza, 1st floor, C-29\nYou have been parked for 3 hours.',
+        'tag': 'ParkedInReminder',
+        'icon': AppIcon,
+        'badge': AppIcon,
+        'actions': [
+          { 'action': 'show', 'title': 'Show', 'icon': MarkerIcon },
+        ],
+        vibrate: [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500]
+      };
       navigator.serviceWorker.ready.then(function(registration) {
-        registration.showNotification('Vibration Sample', {
-          body: 'Buzz! Buzz!',
-          icon: './favicon.png',
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: 'vibration-sample'
-        });
+        registration.showNotification('ParkedIn Reminder', body);
       });
     }
   });
 }
 
-
+setInterval(() => { showNotification();}, 30000);
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
 // we do not want it installed

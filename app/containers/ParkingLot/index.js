@@ -15,6 +15,18 @@ import ParkingLotMap from 'assets/parking_lot.png';
 import swal from 'sweetalert';
 
 import ParkedinIcon from 'assets/logo-new.png';
+import { Button } from 'semantic-ui-react';
+
+import { push } from 'react-router-redux';
+import PersonIcon from 'assets/person_icon.svg';
+import WatchIcon from 'assets/watch_icon.svg';
+import PinIcon from 'assets/pin_icon.svg';
+import InfoIcon from 'assets/info_icon.svg';
+import PersonIconActive from 'assets/person_icon_active.svg';
+import WatchIconActive from 'assets/watch_icon_active.svg';
+import PinIconActive from 'assets/pin_icon_active.svg';
+import InfoIconActive from 'assets/info_icon_active.svg';
+
 
 const AppContainer = styled.div`
   margin-top: 3rem;
@@ -50,6 +62,7 @@ export class ParkingLot extends React.Component { // eslint-disable-line react/p
 
   onHelpButtonIconClick() {
     const content = document.createElement('div');
+    const { dispatch } = this.props;
     content.style = 'display: flex; flex-direction: row; flex-wrap: wrap;'
     content.innerHTML = `
       <div>
@@ -66,12 +79,45 @@ export class ParkingLot extends React.Component { // eslint-disable-line react/p
       content: content,
       buttons: {
         cancel: true,
-        confirm: "Yes"
-      },
+        confirm: {
+          text: "Yes"
+        }
+      }
+    })
+    .then(action => {
+      if (action) {
+        dispatch(push('/parking-detail'));
+      }
     });
   }
 
   render() {
+
+    const { dispatch } = this.props;
+    const navigationItems = [
+      {
+        icon: PersonIcon,
+        iconActive: PersonIconActive,
+        onClick:  () => { dispatch(push('/profile')) }
+      },
+      {
+        icon: PinIcon,
+        iconActive: PinIconActive,
+        onClick:  () => { dispatch(push('/building-map')) },
+        isActive: true,
+      },
+      {
+        icon: WatchIcon,
+        iconActive: WatchIconActive,
+        onClick: () => { dispatch(push('/parking-history')) },
+      },
+      {
+        icon: InfoIcon,
+        iconActive: InfoIconActive,
+        onClick: () => {  dispatch(push('/parking-detail')) },
+        
+      }
+    ]
     return (
       <div>
         <TitleBar help={true} back={true} title="Parking Lot" onHelpIconClick={this.onHelpButtonIconClick} />
@@ -83,8 +129,13 @@ export class ParkingLot extends React.Component { // eslint-disable-line react/p
             <h3>ABC Plaza - 1st Floor</h3>
             <h3>D-5</h3>
           </ContentWrapper>
+          <ContentWrapper>
+            <Button primary onClick={this.onHelpButtonIconClick}>
+              Park here
+            </Button>
+          </ContentWrapper>
         </AppContainer>
-        <BottomNavigationBar />
+        <BottomNavigationBar navigationItems={navigationItems} />
       </div>
     );
   }

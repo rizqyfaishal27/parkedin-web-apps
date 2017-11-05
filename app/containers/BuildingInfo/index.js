@@ -13,9 +13,19 @@ import { Button } from 'semantic-ui-react';
 import TitleBar from 'components/TitleBar';
 import BottomNavigationBar from 'components/BottomNavigationBar';
 import BuildingImage from 'assets/building.jpg';
-
+import { push, goBack } from 'react-router-redux';
 import MoneyIcon from 'assets/money_icon.svg';
 import DirectionIcon from 'assets/direction_icon.svg';
+
+import PersonIcon from 'assets/person_icon.svg';
+import WatchIcon from 'assets/watch_icon.svg';
+import PinIcon from 'assets/pin_icon.svg';
+import InfoIcon from 'assets/info_icon.svg';
+import PersonIconActive from 'assets/person_icon_active.svg';
+import WatchIconActive from 'assets/watch_icon_active.svg';
+import PinIconActive from 'assets/pin_icon_active.svg';
+import InfoIconActive from 'assets/info_icon_active.svg';
+
 
 const AppContainer = styled.div`
   margin-top: 3rem;
@@ -104,9 +114,34 @@ const Border = styled.div`
 
 export class BuildingInfo extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { dispatch } = this.props;
+
+    const navigationItems = [
+      {
+        icon: PersonIcon,
+        iconActive: PersonIconActive,
+        onClick:  () => { dispatch(push('/profile')) }
+      },
+      {
+        icon: PinIcon,
+        iconActive: PinIconActive,
+        onClick:  () => { dispatch(push('/building-map')) },
+        isActive: true,
+      },
+      {
+        icon: WatchIcon,
+        iconActive: WatchIconActive,
+        onClick: () => { dispatch(push('/parking-history')) }
+      },
+      {
+        icon: InfoIcon,
+        iconActive: InfoIconActive,
+        onClick: () => {  dispatch(push('/parking-detail')) }
+      }
+    ]
     return (
       <div>
-        <TitleBar title="Building ABC" help={true} back={true} />
+        <TitleBar title="Building ABC" help={true} back={true} onBackIconClick={() => { dispatch(goBack())} } />
         <AppContainer>
           <ContentWrapper>
              <div className="center large">
@@ -140,11 +175,11 @@ export class BuildingInfo extends React.Component { // eslint-disable-line react
               </div>
             </div>
             <div className="center large padding-top">
-              <Button primary>Park Here</Button>
+              <Button primary onClick={() => dispatch(push('/tap'))}>Park Here</Button>
             </div>
           </ContentWrapper>
         </AppContainer> 
-        <BottomNavigationBar />
+        <BottomNavigationBar navigationItems={navigationItems} />
       </div>
     );
   }
