@@ -11,7 +11,7 @@ import makeSelectParkingLot from './selectors';
 import styled from 'styled-components';
 import TitleBar from 'components/TitleBar';
 import BottomNavigationBar from 'components/BottomNavigationBar';
-import ParkingLotMap from 'assets/parking_lot.png';
+import ParkingLotMap from 'assets/parking_lot.gif';
 import swal from 'sweetalert';
 
 import ParkedinIcon from 'assets/logo-new.png';
