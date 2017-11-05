@@ -27,7 +27,7 @@ import { Button } from 'semantic-ui-react';
 import TupperwareImage from 'assets/tupperware.jpg';
 import IndomieImage from 'assets/indomie.jpg';
 import LinePointsImage from 'assets/linepoints.jpg'
-
+import { push, goBack } from 'react-router-redux';
 
 import MedalIcon from 'assets/medal.svg';
 
@@ -85,6 +85,7 @@ const Border = styled.div`
 
 export class RedeemPoints extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { dispatch } = this.props;
     const navigationItems = [
       {
         icon: PersonIcon,
@@ -111,7 +112,7 @@ export class RedeemPoints extends React.Component { // eslint-disable-line react
 
     return (
       <div>
-        <TitleBar back={true} help={true} title="Redeem Your Points" />
+        <TitleBar back={true} help={true} title="Redeem Your Points" onBackIconClick={() => { dispatch(goBack())}}/>
         <AppContainer>
           <ContentWrapper row justifyContent="center">
             <img src={MedalIcon} role="presentation" height="45px" />
