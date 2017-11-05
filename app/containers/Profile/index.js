@@ -191,7 +191,7 @@ export class Profile extends React.Component { // eslint-disable-line react/pref
             </div>
             <div className="end">
               <h4>{user.totalCurrentPoints} points</h4>
-              <StyledLink>
+              <StyledLink onClick={e => { e.preventDefault(); dispatch(push('/redeem-points'))}}>
                 <img src={GiftIcon} role="presentation" height="16px" />
                 Redeem My Points
               </StyledLink>

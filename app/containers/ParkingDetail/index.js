@@ -25,6 +25,9 @@ import WatchIconActive from 'assets/watch_icon_active.svg';
 import PinIconActive from 'assets/pin_icon_active.svg';
 import InfoIconActive from 'assets/info_icon_active.svg';
 
+import swal from 'sweetalert';
+
+
 const AppContainer = styled.div`
   margin-top: 3rem;
   display: flex;
@@ -67,6 +70,27 @@ const Border = styled.div`
 `
 
 export class ParkingDetail extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  constructor(props) {
+    super(props);
+    this.onPayNowClick = this.onPayNowClick.bind(this);
+  }
+
+  onPayNowClick() {
+    const { dispatch } = this.props;
+    swal({
+      title: 'Succesfully paid!',
+      text: 'Your remaining saldo: Rp. 50.000,00',
+      icon: 'success',
+      button: 'Ok!'
+    })
+    .then(press => {
+      if(press) {
+        dispatch(push('/parking-history'));
+      }
+    })
+  }
+
   render() {
 
     const { dispatch } = this.props;
@@ -98,7 +122,7 @@ export class ParkingDetail extends React.Component { // eslint-disable-line reac
         <TitleBar help={true} back={true} title="Parking Detail" onBackIconClick={() => { dispatch(goBack())} }/>
         <AppContainer>
           <ContentWrapper>
-            <h3>Your Parkng Detail</h3>
+            <h3>Your Parking Detail</h3>
             <h1>IDR 9.000,00</h1>
           </ContentWrapper>
           <ContentWrapper className="start">
@@ -113,7 +137,7 @@ export class ParkingDetail extends React.Component { // eslint-disable-line reac
             </h4>
           </ContentWrapper>
           <ContentWrapper>
-            <Button primary>Pay Now</Button>
+            <Button primary onClick={this.onPayNowClick}>Pay Now</Button>
           </ContentWrapper>
         </AppContainer>
         <BottomNavigationBar navigationItems={navigationItems} />

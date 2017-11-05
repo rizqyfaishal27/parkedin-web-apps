@@ -27,7 +27,7 @@ import InfoIconActive from 'assets/info_icon_active.svg';
 import { push, goBack } from 'react-router-redux';
 import 'react-select/dist/react-select.css';
 const options = [
-  { value: 'last-mont', label: 'Last Month' },
+  { value: 'last-month', label: 'Last Month' },
   { value: 'last-week', label: 'Last Week' }
 ];
 
@@ -100,6 +100,21 @@ const Border = styled.div`
 
 
 export class ParkingHistory extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  constructor(props) {
+    super(props);
+    this.onFilterChange = this.onFilterChange.bind(this);
+    this.state = {
+      selectedFilter: { value: 'last-week', label: 'Last Week' }
+    }
+  }
+
+  onFilterChange(value){
+    this.setState({
+      selectedFilter: value
+    })
+  }
+
   render() {
     const { dispatch } = this.props;
     const navigationItems = [
@@ -131,7 +146,7 @@ export class ParkingHistory extends React.Component { // eslint-disable-line rea
         <TitleBar help={true} back={true} title="Parking History" onBackIconClick={() => { dispatch(goBack())} } />
         <AppContainer>
           <ContentWrapper row className="start">
-            <Select options={options} />
+            <Select options={options} value={this.state.selectedFilter} onChange={this.onFilterChange} />
           </ContentWrapper>
           <ContentWrapper>
             <ParkingHistoryItem>
